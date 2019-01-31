@@ -23,6 +23,7 @@ module.exports = function factory() {
     require('./twig.exports')(Twig);
 
     Twig.exports.factory = factory;
+    Twig.exports.token = Twig.token;
 
     return Twig.exports;
 }

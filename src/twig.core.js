@@ -289,7 +289,7 @@ module.exports = function (Twig) {
      * What characters start "strings" in token definitions. We need this to ignore token close
      * strings inside an expression.
      */
-    Twig.token.strings = ['"', "'"];
+    Twig.token.strings = ['"', "'", '`'];
 
     Twig.token.findStart = function (template) {
         var output = {
@@ -387,9 +387,11 @@ module.exports = function (Twig) {
                 end = pos;
                 found = true;
             } else {
+                let errContext = `${token_def.open}` + template.slice(offset, offset + 50);
+                
                 // throw an exception
                 throw new Twig.Error("Unable to find closing bracket '" + token_def.close +
-                                "'" + " opened near template position " + start);
+                                "'" + " opened near template position " + start + `. (${token_def.type}) With content like: "${errContext}"`);
             }
 
             // Ignore quotes within comments; just look for the next comment close sequence,

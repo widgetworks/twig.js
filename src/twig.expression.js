@@ -339,15 +339,19 @@ module.exports = function (Twig) {
              */
             type: Twig.expression.type.string,
             // See: http://blog.stevenlevithan.com/archives/match-quoted-string
-            regex: /^(["'])(?:(?=(\\?))\2[\s\S])*?\1/,
+            regex: /^(["'`])(?:(?=(\\?))\2[\s\S])*?\1/,
             next: Twig.expression.set.operations_extended,
             compile: function(token, stack, output) {
                 var value = token.value;
                 delete token.match
 
                 // Remove the quotes from the string
-                if (value.substring(0, 1) === '"') {
+                if (value.charAt(0) === '"') {
                     value = value.replace('\\"', '"');
+                } else if (value.charAt(0) === '`') {
+                    // mark as interp string
+                    token.interp = true;
+                    value = value.replace('\\`', '`');
                 } else {
                     value = value.replace("\\'", "'");
                 }
@@ -355,7 +359,21 @@ module.exports = function (Twig) {
                 Twig.log.trace("Twig.expression.compile: ", "String value: ", token.value);
                 output.push(token);
             },
-            parse: Twig.expression.fn.parse.push_value
+            parse: function(token, stack, context) {
+                if (token.interp){
+                    // Resolve the interpolation with the current context
+                    // `${a.b.c}` => ''
+                    
+                    /*
+                    Just eval() the damn thing
+                    */
+                    let str = `return \`${token.value}\``;
+                    let f = Function('context', 'htmlWebpackPlugin', 'model', str);
+                    token.value = f(context, context.htmlWebpackPlugin, context.htmlWebpackPlugin.options);
+                }
+                
+                Twig.expression.fn.parse.push_value(token, stack, context);
+            }
         },
         {
             /**

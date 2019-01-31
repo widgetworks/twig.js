@@ -693,14 +693,18 @@ module.exports = function (Twig) {
              * Block logic tokens.
              *
              *  Format: {% use "template.twig" %}
+             *  Format: {% use "template.twig" [ignore missing] %}
              */
             type: Twig.logic.type.use,
-            regex: /^use\s+(.+)$/,
+            regex: /^use\s+(.+?)(?:\s+(ignore missing))?$/,
             next: [ ],
             open: true,
             compile: function (token) {
-                var expression = token.match[1].trim();
+                var expression = token.match[1].trim(),
+                    ignoreMissing = token.match[2] !== undefined;
                 delete token.match;
+                
+                token.ignoreMissing = ignoreMissing;
 
                 token.stack = Twig.expression.compile.call(this, {
                     type:  Twig.expression.type.expression,
@@ -715,8 +719,14 @@ module.exports = function (Twig) {
                 // Resolve filename
                 return Twig.expression.parseAsync.call(this, token.stack, context)
                 .then(function(file) {
-                    // Import blocks
-                    that.importBlocks(file);
+                    try {
+                        // Import blocks
+                        that.importBlocks(file);
+                    } catch (err){
+                        if (!token.ignoreMissing) {
+                            throw err;
+                        }
+                    }
 
                     return {
                         chain: chain,
