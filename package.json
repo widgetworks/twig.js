@@ -1,6 +1,6 @@
 {
   "author": "John Roepke <john@justjohn.us> (http://john.sh/)",
-  "name": "twig",
+  "name": "@wiwo/twig",
   "description": "JS port of the Twig templating language.",
   "version": "1.13.2",
   "homepage": "https://github.com/twigjs/twig.js",
@@ -15,6 +15,7 @@
     "url": "git://github.com/twigjs/twig.js.git"
   },
   "main": "src/twig.js",
+  "xxmain": "twig.js",
   "engines": {
     "node": ">=6.0"
   },
