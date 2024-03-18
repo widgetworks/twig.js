@@ -22,6 +22,7 @@
   "bin": {
     "twigjs": "./bin/twigjs"
   },
+  "_docs": "To publish: 'npm version x.y.z'; 'git push && git push --tags'; 'npm publish'",
   "scripts": {
     "test": "echo \"Run 'npm run build' first\" && mocha -r should",
     "build-node": "webpack",
