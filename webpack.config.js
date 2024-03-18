@@ -1,5 +1,4 @@
 var webpack = require('webpack');
-var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 var env = process.env.WEBPACK_ENV;
 
@@ -17,10 +16,18 @@ module.exports = {
         library: 'Twig',
         libraryTarget: 'umd'
     },
+    resolve: {
+        fallback: env === 'browser'
+            ? {
+                // Ignore these imports in the browser
+                "path": false,
+                "fs": false,
+            }
+            : {
+                // but allow all imports for node
+            },
+    },
     optimization: {
-        minimize: true,
-        minimizer: [new UglifyJsPlugin({
-            include: /\.min\.js$/
-        })]
-    }
+        minimize: env === 'browser',
+    },
 };
