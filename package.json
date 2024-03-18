@@ -14,8 +14,8 @@
     "type": "git",
     "url": "git://github.com/twigjs/twig.js.git"
   },
-  "main": "src/twig.js",
-  "xxmain": "twig.js",
+  "browser": "twig.min.js",
+  "main": "twig.js",
   "engines": {
     "node": ">=6.0"
   },
@@ -23,7 +23,7 @@
     "twigjs": "./bin/twigjs"
   },
   "scripts": {
-    "test": "echo \"Run `npm run build` first\" && mocha -r should",
+    "test": "echo \"Run 'npm run build' first\" && mocha -r should",
     "build-node": "webpack",
     "build-browser": "cross-env WEBPACK_ENV=browser webpack",
     "build": "npm run build-node && npm run build-browser",
