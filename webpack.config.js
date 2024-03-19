@@ -13,8 +13,11 @@ module.exports = {
     output: {
         path: __dirname,
         filename: env === 'browser' ? 'twig.browser.js' : 'twig.js',
-        library: 'Twig',
-        libraryTarget: 'umd'
+        library: {
+            name: 'Twig',
+            type: 'umd',
+        },
+        globalObject: 'globalThis',
     },
     resolve: {
         fallback: env === 'browser'
