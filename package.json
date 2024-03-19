@@ -14,7 +14,7 @@
     "type": "git",
     "url": "git://github.com/twigjs/twig.js.git"
   },
-  "browser": "twig.min.js",
+  "browser": "twig.browser.js",
   "main": "twig.js",
   "engines": {
     "node": ">=6.0"

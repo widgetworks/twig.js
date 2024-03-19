@@ -12,7 +12,7 @@ module.exports = {
     },
     output: {
         path: __dirname,
-        filename: env === 'browser' ? 'twig.min.js' : 'twig.js',
+        filename: env === 'browser' ? 'twig.browser.js' : 'twig.js',
         library: 'Twig',
         libraryTarget: 'umd'
     },
@@ -28,6 +28,6 @@ module.exports = {
             },
     },
     optimization: {
-        minimize: env === 'browser',
+        minimize: false,
     },
 };
