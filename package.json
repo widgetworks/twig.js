@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "minimatch": "3.0.x",
-    "locutus": "^2.0.5",
+    "locutus": "^2.0.32",
     "walk": "2.3.x"
   },
   "devDependencies": {
