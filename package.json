@@ -30,7 +30,7 @@
     "build": "npm run build-node && npm run build-browser"
   },
   "dependencies": {
-    "minimatch": "3.0.x",
+    "minimatch": "3.1.2",
     "locutus": "^2.0.5",
     "walk": "2.3.x"
   },
